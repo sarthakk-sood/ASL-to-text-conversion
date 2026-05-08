@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Models and Datasets
+*.pkl
+*.task
+# Note: Keep the task model if it's small, otherwise ignore it
+# hand_landmarker.task
+
+# Dataset / Images (Ignore massive datasets to save GitHub space)
+asl_alphabet_train/
+asl_alphabet_test/
+asl_landmarks.csv
+
+# Django
+db.sqlite3
+*.sqlite3-journal
+media/
+
+# Node / React
+node_modules/
+dist/
+.DS_Store
+.vite/
