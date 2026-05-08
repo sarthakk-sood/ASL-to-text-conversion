@@ -36,6 +36,7 @@ export default function App() {
   useEffect(() => {
     let landmarker = null;
     let keepRunning = true;
+    let activeStream = null;
 
     async function init() {
       if (!isCameraActive) return;
@@ -57,6 +58,7 @@ export default function App() {
 
         // 2. Open User's Camera
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        activeStream = stream;
         
         // If component unmounted or camera toggled off while waiting, immediately stop tracks
         if (!keepRunning) {
@@ -143,11 +145,18 @@ export default function App() {
     
     return () => { 
         keepRunning = false; 
+        
+        // Stop all tracks directly from the tracked stream variable
+        if (activeStream) {
+            activeStream.getTracks().forEach(track => track.stop());
+        }
+        
         if (videoRef.current && videoRef.current.srcObject) {
             const stream = videoRef.current.srcObject;
             stream.getTracks().forEach(track => track.stop());
             videoRef.current.srcObject = null;
         }
+        
         if (landmarker) {
             landmarker.close();
         }
